@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sharism.album_server.mapper.PhotoInfoMapper">
+  <resultMap id="BaseResultMap" type="com.sharism.album_server.model.PhotoInfo">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="album_id" jdbcType="CHAR" property="albumId" />
+    <result column="photo_name" jdbcType="VARCHAR" property="photoName" />
+    <result column="photo_describe" jdbcType="VARCHAR" property="photoDescribe" />
+    <result column="photo_path" jdbcType="VARCHAR" property="photoPath" />
+    <result column="storage_path" jdbcType="VARCHAR" property="storagePath" />
+    <result column="add_time" jdbcType="CHAR" property="addTime" />
+    <result column="del" jdbcType="INTEGER" property="del" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, album_id, photo_name, photo_describe, photo_path, storage_path, add_time, del
+  </sql>
+  <select id="selectByExample" parameterType="com.sharism.album_server.model.PhotoInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from photo_server_db
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from photo_server_db
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from photo_server_db
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sharism.album_server.model.PhotoInfoExample">
+    delete from photo_server_db
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sharism.album_server.model.PhotoInfo">
+    insert into photo_server_db (id, album_id, photo_name, 
+      photo_describe, photo_path, storage_path, 
+      add_time, del)
+    values (#{id,jdbcType=CHAR}, #{albumId,jdbcType=CHAR}, #{photoName,jdbcType=VARCHAR}, 
+      #{photoDescribe,jdbcType=VARCHAR}, #{photoPath,jdbcType=VARCHAR}, #{storagePath,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=CHAR}, #{del,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sharism.album_server.model.PhotoInfo">
+    insert into photo_server_db
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="albumId != null">
+        album_id,
+      </if>
+      <if test="photoName != null">
+        photo_name,
+      </if>
+      <if test="photoDescribe != null">
+        photo_describe,
+      </if>
+      <if test="photoPath != null">
+        photo_path,
+      </if>
+      <if test="storagePath != null">
+        storage_path,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="del != null">
+        del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="albumId != null">
+        #{albumId,jdbcType=CHAR},
+      </if>
+      <if test="photoName != null">
+        #{photoName,jdbcType=VARCHAR},
+      </if>
+      <if test="photoDescribe != null">
+        #{photoDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="photoPath != null">
+        #{photoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="storagePath != null">
+        #{storagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=CHAR},
+      </if>
+      <if test="del != null">
+        #{del,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sharism.album_server.model.PhotoInfoExample" resultType="java.lang.Long">
+    select count(*) from photo_server_db
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update photo_server_db
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.albumId != null">
+        album_id = #{record.albumId,jdbcType=CHAR},
+      </if>
+      <if test="record.photoName != null">
+        photo_name = #{record.photoName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photoDescribe != null">
+        photo_describe = #{record.photoDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photoPath != null">
+        photo_path = #{record.photoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storagePath != null">
+        storage_path = #{record.storagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=CHAR},
+      </if>
+      <if test="record.del != null">
+        del = #{record.del,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update photo_server_db
+    set id = #{record.id,jdbcType=CHAR},
+      album_id = #{record.albumId,jdbcType=CHAR},
+      photo_name = #{record.photoName,jdbcType=VARCHAR},
+      photo_describe = #{record.photoDescribe,jdbcType=VARCHAR},
+      photo_path = #{record.photoPath,jdbcType=VARCHAR},
+      storage_path = #{record.storagePath,jdbcType=VARCHAR},
+      add_time = #{record.addTime,jdbcType=CHAR},
+      del = #{record.del,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sharism.album_server.model.PhotoInfo">
+    update photo_server_db
+    <set>
+      <if test="albumId != null">
+        album_id = #{albumId,jdbcType=CHAR},
+      </if>
+      <if test="photoName != null">
+        photo_name = #{photoName,jdbcType=VARCHAR},
+      </if>
+      <if test="photoDescribe != null">
+        photo_describe = #{photoDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="photoPath != null">
+        photo_path = #{photoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="storagePath != null">
+        storage_path = #{storagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=CHAR},
+      </if>
+      <if test="del != null">
+        del = #{del,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sharism.album_server.model.PhotoInfo">
+    update photo_server_db
+    set album_id = #{albumId,jdbcType=CHAR},
+      photo_name = #{photoName,jdbcType=VARCHAR},
+      photo_describe = #{photoDescribe,jdbcType=VARCHAR},
+      photo_path = #{photoPath,jdbcType=VARCHAR},
+      storage_path = #{storagePath,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=CHAR},
+      del = #{del,jdbcType=INTEGER}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+
+
+
+  <!--批量设置为删除状态-->
+  <update id="batchSetPhotoDeleteStatus" parameterType="java.util.List">
+    update photo_server_db set del = 1 where album_id= #{albumId} AND id in
+    <foreach collection="list" item="item" index="index" open="(" close=")"  separator="," >
+      #{item}
+    </foreach>
+
+  </update>
+  <!--多条件查询-->
+  <select id="selectPhotoPageList" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from photo_server_db
+    where  1=1
+    <if test="id != null">
+      AND   id = #{id,jdbcType=CHAR}
+    </if>
+    <if test="albumId != null">
+      AND   album_id = #{albumId,jdbcType=CHAR}
+    </if>
+    <if test="del != null">
+      AND   del = #{del,jdbcType=CHAR}
+    </if>
+    <if test="arrange == 'ASC'">
+      ORDER BY  add_time  ASC
+    </if>
+    <if test="arrange == 'DESC'">
+      ORDER BY  add_time  DESC
+    </if>
+    <if test="arrange == null">
+      ORDER BY  add_time  DESC
+    </if>
+  </select>
+</mapper>

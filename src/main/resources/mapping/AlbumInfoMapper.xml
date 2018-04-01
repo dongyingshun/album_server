@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sharism.album_server.mapper.AlbumInfoMapper">
+  <resultMap id="BaseResultMap" type="com.sharism.album_server.model.AlbumInfo">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="user_id" jdbcType="CHAR" property="userId" />
+    <result column="album_sort" jdbcType="VARCHAR" property="albumSort" />
+    <result column="album_type" jdbcType="VARCHAR" property="albumType" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="album_name" jdbcType="VARCHAR" property="albumName" />
+    <result column="create_date" jdbcType="VARCHAR" property="createDate" />
+    <result column="privacy_set" jdbcType="INTEGER" property="privacySet" />
+    <result column="album_password" jdbcType="VARCHAR" property="albumPassword" />
+    <result column="album_icon" jdbcType="VARCHAR" property="albumIcon" />
+    <result column="icon_path" jdbcType="VARCHAR" property="iconPath" />
+    <result column="show_style" jdbcType="VARCHAR" property="showStyle" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, album_sort, album_type, description, album_name, create_date, privacy_set, 
+    album_password, album_icon, icon_path, show_style
+  </sql>
+  <select id="selectByExample" parameterType="com.sharism.album_server.model.AlbumInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from album_server_db
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from album_server_db
+    where id = #{id,jdbcType=CHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from album_server_db
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sharism.album_server.model.AlbumInfoExample">
+    delete from album_server_db
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sharism.album_server.model.AlbumInfo">
+    insert into album_server_db (id, user_id, album_sort, 
+      album_type, description, album_name, 
+      create_date, privacy_set, album_password, 
+      album_icon, icon_path, show_style
+      )
+    values (#{id,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, #{albumSort,jdbcType=VARCHAR}, 
+      #{albumType,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{albumName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{privacySet,jdbcType=INTEGER}, #{albumPassword,jdbcType=VARCHAR}, 
+      #{albumIcon,jdbcType=VARCHAR}, #{iconPath,jdbcType=VARCHAR}, #{showStyle,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sharism.album_server.model.AlbumInfo">
+    insert into album_server_db
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="albumSort != null">
+        album_sort,
+      </if>
+      <if test="albumType != null">
+        album_type,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="albumName != null">
+        album_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="privacySet != null">
+        privacy_set,
+      </if>
+      <if test="albumPassword != null">
+        album_password,
+      </if>
+      <if test="albumIcon != null">
+        album_icon,
+      </if>
+      <if test="iconPath != null">
+        icon_path,
+      </if>
+      <if test="showStyle != null">
+        show_style,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="albumSort != null">
+        #{albumSort,jdbcType=VARCHAR},
+      </if>
+      <if test="albumType != null">
+        #{albumType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="albumName != null">
+        #{albumName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="privacySet != null">
+        #{privacySet,jdbcType=INTEGER},
+      </if>
+      <if test="albumPassword != null">
+        #{albumPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="albumIcon != null">
+        #{albumIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="iconPath != null">
+        #{iconPath,jdbcType=VARCHAR},
+      </if>
+      <if test="showStyle != null">
+        #{showStyle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sharism.album_server.model.AlbumInfoExample" resultType="java.lang.Long">
+    select count(*) from album_server_db
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update album_server_db
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=CHAR},
+      </if>
+      <if test="record.albumSort != null">
+        album_sort = #{record.albumSort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.albumType != null">
+        album_type = #{record.albumType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.albumName != null">
+        album_name = #{record.albumName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privacySet != null">
+        privacy_set = #{record.privacySet,jdbcType=INTEGER},
+      </if>
+      <if test="record.albumPassword != null">
+        album_password = #{record.albumPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.albumIcon != null">
+        album_icon = #{record.albumIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iconPath != null">
+        icon_path = #{record.iconPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showStyle != null">
+        show_style = #{record.showStyle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update album_server_db
+    set id = #{record.id,jdbcType=CHAR},
+      user_id = #{record.userId,jdbcType=CHAR},
+      album_sort = #{record.albumSort,jdbcType=VARCHAR},
+      album_type = #{record.albumType,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      album_name = #{record.albumName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=VARCHAR},
+      privacy_set = #{record.privacySet,jdbcType=INTEGER},
+      album_password = #{record.albumPassword,jdbcType=VARCHAR},
+      album_icon = #{record.albumIcon,jdbcType=VARCHAR},
+      icon_path = #{record.iconPath,jdbcType=VARCHAR},
+      show_style = #{record.showStyle,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sharism.album_server.model.AlbumInfo">
+    update album_server_db
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="albumSort != null">
+        album_sort = #{albumSort,jdbcType=VARCHAR},
+      </if>
+      <if test="albumType != null">
+        album_type = #{albumType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="albumName != null">
+        album_name = #{albumName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="privacySet != null">
+        privacy_set = #{privacySet,jdbcType=INTEGER},
+      </if>
+      <if test="albumPassword != null">
+        album_password = #{albumPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="albumIcon != null">
+        album_icon = #{albumIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="iconPath != null">
+        icon_path = #{iconPath,jdbcType=VARCHAR},
+      </if>
+      <if test="showStyle != null">
+        show_style = #{showStyle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sharism.album_server.model.AlbumInfo">
+    update album_server_db
+    set user_id = #{userId,jdbcType=CHAR},
+      album_sort = #{albumSort,jdbcType=VARCHAR},
+      album_type = #{albumType,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      album_name = #{albumName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=VARCHAR},
+      privacy_set = #{privacySet,jdbcType=INTEGER},
+      album_password = #{albumPassword,jdbcType=VARCHAR},
+      album_icon = #{albumIcon,jdbcType=VARCHAR},
+      icon_path = #{iconPath,jdbcType=VARCHAR},
+      show_style = #{showStyle,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <!--根据用户id获取相册-->
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from album_server_db
+    where user_id = #{userId,jdbcType=CHAR} ORDER BY create_date DESC
+  </select>
+
+
+
+</mapper>
